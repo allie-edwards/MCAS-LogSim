@@ -1,5 +1,7 @@
 # Simulate a Log Collector in Microsoft Cloud App Security
 
+### **This repo is no longer being maintained. Please refer to the latest version in the [Microsoft/Microsoft-Cloud-App-Security](https://github.com/microsoft/Microsoft-Cloud-App-Security) repo.**  <p></p><p></p>
+
 ## Overview
 [Microsoft Cloud App Security](https://www.microsoft.com/en-us/microsoft-365/enterprise-mobility-security/cloud-app-security) allows users to [discover and manage shadow IT](https://docs.microsoft.com/en-us/cloud-app-security/tutorial-shadow-it) in their environment.  One way to use MCAS Discovery features is by configuring automatic log upload from your Firewall/Proxy using a [log collector](https://docs.microsoft.com/en-us/cloud-app-security/discovery-docker).  
 The purpose of these scripts is to simulate a log collector by uploading randomized daily logs to MCAS (using Palo Alto log formatting), enabling users to test Discovery features in their MCAS tenant with as little infrastructure as possible.
@@ -20,21 +22,25 @@ The following resources will be deployed in Azure:
 
 ---  
 
-## Contributors
-[Dan Edwards](https://github.com/dan-edwards/)  
-[Sebastien Molendijk](https://github.com/Sebmolendijk/)
-
----  
-
 ## Instructions
 ### Generate an API token in MCAS
 * From the MCAS Portal
     * Click the **Settings Cog** and select **Security extensions**
     * From **API tokens** use the plus to **Generate a new token**
     * Take note of the token that is generated
-* Detailed instructions are [here](https://docs.microsoft.com/en-us/cloud-app-security/api-authentication)
+* More information can be found [here](https://docs.microsoft.com/en-us/cloud-app-security/api-authentication)
 
 ![](images/api.PNG?raw=true)
+
+### Create a Data Source in MCAS
+* From the MCAS Portal
+    * Click the **Settings Cog** and select **Log Collectors**
+    * Add a new **Data Source**
+        * Set the **Source** to **PA Series Firewall**
+        * Set the **Receiver Type** to **FTP**
+* More information can be found [here](https://docs.microsoft.com/en-us/cloud-app-security/discovery-docker-ubuntu)
+
+![](images/data-source.PNG?raw=true)
 
 ### Prepare scripts
 * [Clone](https://docs.github.com/en/free-pro-team@latest/desktop/contributing-and-collaborating-using-github-desktop/cloning-a-repository-from-github-to-github-desktop) this repo locally
@@ -63,4 +69,10 @@ The following resources will be deployed in Azure:
 
 ![](images/governance-log.PNG?raw=true) 
 
----  
+---   
+
+## Contributors
+[Dan Edwards](https://github.com/dan-edwards/)  
+[Sebastien Molendijk](https://github.com/Sebmolendijk/)
+
+---

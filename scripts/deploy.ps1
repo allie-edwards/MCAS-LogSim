@@ -97,11 +97,10 @@ $credential = New-Object -TypeName System.Management.Automation.PSCredential -Ar
 
 New-AzAutomationCredential -ResourceGroupName $resourceGroup -AutomationAccountName $automationAccount.AutomationAccountName -Name "MCAS-API" -Value $credential
 
-## Create $CASCredential and new data source in MCAS
+## Create $CASCredential and new data source in MCAS --- NOT WORKING
 
-$CASCredential = $credential
-
-New-MCASDiscoveryDataSource -Credential $CASCredential -DeviceType "PALO_ALTO" -Name $dataSource -ReceiverType "FTP"
+# $CASCredential = $credential
+# New-MCASDiscoveryDataSource -Credential $CASCredential -DeviceType PALO_ALTO -Name $dataSource -ReceiverType FTP
 
 ## Create Variables
 
