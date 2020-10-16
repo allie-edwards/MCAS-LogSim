@@ -14,12 +14,44 @@ $runbookName = "MCAS-LogSim" # The name of the runbook to be created
 $scheduleName = "Schedule01" # The name of the runbook schedule to be created
 $user = "{tenant}.{location}.portal.cloudappsecurity.com" # Replace {tenant} and {location} with your MCAS tenant information
 $api = ConvertTo-SecureString "{API Key}" -AsPlainText -Force # Replace {API-Key} with the key generated in MCAS
-$localPath = "C:\mcas-logsim" # File path for your cloned repo with no trailing \
-$dataSource = "Palo-Alto" # The name of the data source you created in MCAS
+$localPath = "C:\mcas-logsim" # File path for your cloned repo (with no trailing backslash)
+$dataSource = "Palo-Alto" # The name of the data source which will be created in MCAS
 
 ## ------------------------------------------------- ##
 ##                      Begin                        ##
 ## ------------------------------------------------- ##
+
+## Look for MCAS PowerShell module and install if needed.
+
+if (Get-InstalledModule -Name MCAS -ErrorAction SilentlyContinue) {
+  Write-Host "MCAS module already installed, continuing on." -ForegroundColor Green -BackgroundColor Black
+} 
+else {
+  try {
+      Write-Host "MCAS module not found, proceeding to install." -ForegroundColor Green -BackgroundColor Black
+      Install-Module -Name MCAS -AllowClobber -Confirm:$False -Force  
+  }
+  catch [Exception] {
+      $_.message 
+      exit
+  }
+}
+
+## Look for Az PowerShell module and install if needed.
+
+if (Get-InstalledModule -Name Az -ErrorAction SilentlyContinue) {
+  Write-Host "Az module already installed, continuing on." -ForegroundColor Green -BackgroundColor Black
+} 
+else {
+  try {
+      Write-Host "Az module not found, proceeding to install." -ForegroundColor Green -BackgroundColor Black
+      Install-Module -Name Az -AllowClobber -Confirm:$False -Force  
+  }
+  catch [Exception] {
+      $_.message 
+      exit
+  }
+}
 
 ## Select subscription for deployment
 
@@ -64,6 +96,12 @@ New-AzAutomationModule -AutomationAccountName $automationAccount.AutomationAccou
 $credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $user, $api
 
 New-AzAutomationCredential -ResourceGroupName $resourceGroup -AutomationAccountName $automationAccount.AutomationAccountName -Name "MCAS-API" -Value $credential
+
+## Create $CASCredential and new data source in MCAS
+
+$CASCredential = $credential
+
+New-MCASDiscoveryDataSource -Credential $CASCredential -DeviceType "PALO_ALTO" -Name $dataSource -ReceiverType "FTP"
 
 ## Create Variables
 

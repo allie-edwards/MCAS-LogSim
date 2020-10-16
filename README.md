@@ -4,7 +4,11 @@
 [Microsoft Cloud App Security](https://www.microsoft.com/en-us/microsoft-365/enterprise-mobility-security/cloud-app-security) allows users to [discover and manage shadow IT](https://docs.microsoft.com/en-us/cloud-app-security/tutorial-shadow-it) in their environment.  One way to use MCAS Discovery features is by configuring automatic log upload from your Firewall/Proxy using a [log collector](https://docs.microsoft.com/en-us/cloud-app-security/discovery-docker).  
 The purpose of these scripts is to simulate a log collector by uploading randomized daily logs to MCAS (using Palo Alto log formatting), enabling users to test Discovery features in their MCAS tenant with as little infrastructure as possible.
 
-The following resources will be deployed in Azure
+If you do not have them already, the following PowerShell modules will be installed:
+* [Az Module](https://docs.microsoft.com/en-us/powershell/azure/new-azureps-module-az?view=azps-4.8.0)
+* [MCAS Module](https://github.com/Microsoft/MCAS)
+
+The following resources will be deployed in Azure:
 * Resource Group
 * Storage Account containing dummy Palo-Alto logs
 * An Automation Account containing
@@ -12,7 +16,7 @@ The following resources will be deployed in Azure
     * A daily schedule for the runbook
     * A credential object containing an API token
 
-Note: Never run a PowerShell script without first reviewing and understanding what it does.
+*Note: Never run a PowerShell script without reading it first.*
 
 ---  
 
@@ -23,10 +27,6 @@ Note: Never run a PowerShell script without first reviewing and understanding wh
 ---  
 
 ## Instructions
-### Install the Az PowerShell module
-* `Install-Module -Name Az`
-* Detailed instructions and requirements [here.](https://docs.microsoft.com/en-us/powershell/azure/new-azureps-module-az?view=azps-4.8.0)
-
 ### Generate an API token in MCAS
 * From the MCAS Portal
     * Click the **Settings Cog** and select **Security extensions**
@@ -36,18 +36,8 @@ Note: Never run a PowerShell script without first reviewing and understanding wh
 
 ![](images/api.PNG?raw=true)
 
-### Create a Data Source in MCAS
-* From the MCAS Portal
-    * Click the **Settings Cog** and select **Log collectors**
-    * **Add a data source**
-        * Select **PA Series Firewall** as the **Source**
-        * Select **FTP** as the **Receiver type** 
-* Detailed instructions are [here](https://docs.microsoft.com/en-us/cloud-app-security/discovery-docker-ubuntu)
-
-![](images/data-source.PNG?raw=true)
-
 ### Prepare scripts
-* Clone this repo locally
+* [Clone](https://docs.github.com/en/free-pro-team@latest/desktop/contributing-and-collaborating-using-github-desktop/cloning-a-repository-from-github-to-github-desktop) this repo locally
 * In `deploy.ps1`
     * Update the variable set (lines 7-> 18) with desired values
     * `$storagename` must be a globally unique value
