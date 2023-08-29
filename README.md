@@ -72,7 +72,7 @@ The following resources will be deployed in Azure:
 ---   
 
 ## Contributors
-[Dan Edwards](https://github.com/dan-edwards/)  
+[Allie Edwards](https://github.com/allie-edwards/)  
 [Sebastien Molendijk](https://github.com/Sebmolendijk/)
 
 ---
